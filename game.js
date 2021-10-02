@@ -3,6 +3,39 @@ console.log("Hello, World!");
 const VALUES = ["rock", "paper", "scissors"];
 let playerPoints = 0;
 let computerPoints = 0;
+let gameCanceled = false;
+
+/* Function that gets a valid player selection or undefined */
+
+function getSelection() {
+    let isValid = false;
+    let playerSelection;
+    while(!isValid) {
+        playerSelection = prompt("rock, paper or scissors? Press cancel to stop game.");
+        if(checkSelection(playerSelection)) {
+            isValid = true;
+        }
+        else if(playerSelection === null) { // Player canceled
+            gameCanceled = true;
+            return;
+        }
+        else {
+            alert("Invalid value!! input rock, paper or scissors to play. Press cancel to stop game.");
+        }
+    }
+    return playerSelection;
+}
+
+/* Function that checks if user input a valid value to play the game in the prompt (rock, paper or scissors) */
+
+function checkSelection(playerSelection) {
+    if(VALUES.indexOf(playerSelection) == -1) { // Not found in VALUES
+        return false;
+    }
+    else {
+        return true; // Valid input
+    }
+}
 
 /* Function that randomly returns rock, paper or scissors */
 
@@ -63,21 +96,31 @@ function playSingleRound(playerSelection, computerSelection) {
 }
 
 function game() {
+    gameCanceled = false;
+    let i = 0;
     let playerSelection = "";
     let computerSelection = "";
-    for(let i = 0; i < 5; i++) {
-        playerSelection = prompt("rock, paper or scissors?");
-        computerSelection = computerPlay();
+    playerSelection = getSelection();
+    computerSelection = computerPlay();
+    while(!gameCanceled && i < 5) {
         console.log(playSingleRound(playerSelection, computerSelection));
         console.log(`Player points: ${playerPoints} Computer points: ${computerPoints}`);
+        i++;
+        playerSelection = getSelection();
+        computerSelection = computerPlay();
     }
-    if(playerPoints > computerPoints) {
-        console.log("Player wins!! :)");
-    }
-    else if(playerPoints < computerPoints) {
-        console.log("Computer wins!! :(");
+    if(!gameCanceled) {
+        if(playerPoints > computerPoints) {
+            console.log("Player wins!! :)");
+        }
+        else if(playerPoints < computerPoints) {
+            console.log("Computer wins!! :(");
+        }
+        else {
+            console.log("Tie!! :/");
+        }
     }
     else {
-        console.log("Tie!! :/");
+        console.log("Game was canceled!!");
     }
 }
