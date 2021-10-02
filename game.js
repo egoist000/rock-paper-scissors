@@ -5,6 +5,12 @@ let playerPoints = 0;
 let computerPoints = 0;
 let gameCanceled = false;
 
+function initGame() {
+    gameCanceled = false;
+    computerPoints = 0;
+    playerPoints = 0;
+}
+
 /* Function that gets a valid player selection or undefined */
 
 function getSelection() {
@@ -19,7 +25,7 @@ function getSelection() {
             gameCanceled = true;
             return;
         }
-        else {
+        else { // Invalid value
             alert("Invalid value!! input rock, paper or scissors to play. Press cancel to stop game.");
         }
     }
@@ -96,7 +102,7 @@ function playSingleRound(playerSelection, computerSelection) {
 }
 
 function game() {
-    gameCanceled = false;
+    initGame();
     let i = 0;
     let playerSelection = "";
     let computerSelection = "";
