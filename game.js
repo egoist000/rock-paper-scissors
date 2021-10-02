@@ -13,7 +13,7 @@ function initGame() {
 
 /* Function that gets a valid player selection or undefined */
 
-function getSelection() {
+function getValidSelection() {
     let isValid = false;
     let playerSelection;
     while(!isValid) {
@@ -104,15 +104,13 @@ function playSingleRound(playerSelection, computerSelection) {
 function game() {
     initGame();
     let i = 0;
-    let playerSelection = "";
-    let computerSelection = "";
-    playerSelection = getSelection();
-    computerSelection = computerPlay();
+    let playerSelection = playerSelection = getValidSelection();;
+    let computerSelection = computerSelection = computerPlay();
     while(!gameCanceled && i < 5) {
         console.log(playSingleRound(playerSelection, computerSelection));
         console.log(`Player points: ${playerPoints} Computer points: ${computerPoints}`);
         i++;
-        playerSelection = getSelection();
+        playerSelection = getValidSelection();
         computerSelection = computerPlay();
     }
     if(!gameCanceled) {
