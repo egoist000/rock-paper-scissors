@@ -104,8 +104,8 @@ function playSingleRound(playerSelection, computerSelection) {
 function game() {
     initGame();
     let i = 0;
-    let playerSelection = playerSelection = getValidSelection();;
-    let computerSelection = computerSelection = computerPlay();
+    let playerSelection = getValidSelection();;
+    let computerSelection = computerPlay();
     while(!gameCanceled && i < 5) {
         console.log(playSingleRound(playerSelection, computerSelection));
         console.log(`Player points: ${playerPoints} Computer points: ${computerPoints}`);
