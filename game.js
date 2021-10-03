@@ -1,9 +1,11 @@
 console.log("Hello, World!");
 
 const VALUES = ["rock", "paper", "scissors"];
-let playerPoints = 0;
-let computerPoints = 0;
-let gameCanceled = false;
+let playerPoints;
+let computerPoints;
+let gameCanceled;
+
+/* Init game variables */
 
 function initGame() {
     gameCanceled = false;
@@ -104,27 +106,27 @@ function playSingleRound(playerSelection, computerSelection) {
 function game() {
     initGame();
     let i = 0;
-    let playerSelection = getValidSelection();;
-    let computerSelection = computerPlay();
-    while(!gameCanceled && i < 5) {
-        console.log(playSingleRound(playerSelection, computerSelection));
-        console.log(`Player points: ${playerPoints} Computer points: ${computerPoints}`);
-        i++;
+    while(i < 5) {
         playerSelection = getValidSelection();
         computerSelection = computerPlay();
-    }
-    if(!gameCanceled) {
-        if(playerPoints > computerPoints) {
-            console.log("Player wins!! :)");
-        }
-        else if(playerPoints < computerPoints) {
-            console.log("Computer wins!! :(");
+        if(!gameCanceled) {
+            console.log(`Player selection: ${playerSelection}. Computer selection: ${computerSelection}`)
+            console.log(playSingleRound(playerSelection, computerSelection));
+            console.log(`Player points: ${playerPoints} Computer points: ${computerPoints}`);
+            i++;
         }
         else {
-            console.log("Tie!! :/");
+            console.log("Exit game..");
+            return null; // User canceled
         }
+    } // Game Ended
+    if(playerPoints > computerPoints) {
+        console.log("Player wins!! :)");
+    }
+    else if(playerPoints < computerPoints) {
+        console.log("Computer wins!! :(");
     }
     else {
-        console.log("Game was canceled!!");
+        console.log("Tie!! :/");
     }
 }
