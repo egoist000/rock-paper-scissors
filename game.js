@@ -51,7 +51,7 @@ function computerPlay() {
     return VALUES[Math.floor(Math.random() * 3)];
 }
 
-/* Function that plays a single round of Rock, Paper, Scissors  and declare the winner of the round */
+/* Function that plays a single round of Rock, Paper, Scissors and declare the winner of the round */
 
 function playSingleRound(playerSelection, computerSelection) {
     if(playerSelection === null) {
@@ -103,10 +103,12 @@ function playSingleRound(playerSelection, computerSelection) {
     } 
 }
 
-function game() {
+/* Game function that plays n round of rock paper and scissors or 5 if not specified */
+
+function game(numberOfRounds = 5) {
     initGame();
-    let i = 0;
-    while(i < 5) {
+    let i = 0; // Round iterations
+    while(i < Math.abs(numberOfRounds)) {
         playerSelection = getValidSelection();
         computerSelection = computerPlay();
         if(!gameCanceled) {
