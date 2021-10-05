@@ -85,10 +85,15 @@ body, html {
     font-size: 14px;
 }
 
-.logs p {
+.logs p{
     margin: 0;
-    padding: 1rem;
-    flex: 1;
+    padding-bottom: 1rem;
+}
+
+#results {
+    margin: 0;
+    padding: .6rem;
+    flex: 1 0 auto;
 }
 
 .score p {
