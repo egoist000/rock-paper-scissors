@@ -1,11 +1,9 @@
 console.log("Hello, World!");
 
-const VALUES = ["rock", "paper", "scissors"];
+const GAME_VALUES = ["rock", "paper", "scissors"];
 let playerPoints;
 let computerPoints;
 let gameCanceled;
-
-/* Init game variables */
 
 function initGame() {
     gameCanceled = false;
@@ -13,9 +11,7 @@ function initGame() {
     playerPoints = 0;
 }
 
-/* Function that gets a valid player selection or undefined */
-
-function getValidSelection() {
+function getValidPlayerSelection() {
     let isValid = false;
     let playerSelection;
     while(!isValid) {
@@ -34,10 +30,8 @@ function getValidSelection() {
     return playerSelection;
 }
 
-/* Function that checks if user input a valid value to play the game in the prompt (rock, paper or scissors) */
-
 function checkSelection(playerSelection) {
-    if(VALUES.indexOf(playerSelection) == -1) { // Not found in VALUES
+    if(GAME_VALUES.indexOf(playerSelection) == -1) { // Not found in GAME_VALUES
         return false;
     }
     else {
@@ -48,15 +42,10 @@ function checkSelection(playerSelection) {
 /* Function that randomly returns rock, paper or scissors */
 
 function computerPlay() {
-    return VALUES[Math.floor(Math.random() * 3)];
+    return GAME_VALUES[Math.floor(Math.random() * 3)];
 }
 
-/* Function that plays a single round of Rock, Paper, Scissors and declare the winner of the round */
-
 function playSingleRound(playerSelection, computerSelection) {
-    if(playerSelection === null) {
-        return;
-    }
     playerSelection = playerSelection.toLowerCase();
     switch(playerSelection) {
         case "rock":
@@ -103,19 +92,15 @@ function playSingleRound(playerSelection, computerSelection) {
     } 
 }
 
-/* Game function that plays n round of rock paper and scissors or 5 if not specified */
-
 function game(numberOfRounds = 5) {
     initGame();
-    let i = 0; // Round iterations
-    while(i < Math.abs(numberOfRounds)) {
-        playerSelection = getValidSelection();
+    for(let i = 0; i < Math.abs(numberOfRounds); i++) {
+        playerSelection = getValidPlayerSelection();
         computerSelection = computerPlay();
         if(!gameCanceled) {
             console.log(`Player selection: ${playerSelection}. Computer selection: ${computerSelection}`)
             console.log(playSingleRound(playerSelection, computerSelection));
             console.log(`Player points: ${playerPoints} Computer points: ${computerPoints}`);
-            i++;
         }
         else {
             console.log("Exit game..");
