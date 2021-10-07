@@ -1,44 +1,8 @@
-console.log("Hello, World!");
-
 const GAME_VALUES = ["rock", "paper", "scissors"];
+let gameRunning = true;
 let playerPoints = 0;
 let computerPoints = 0;
 let logs = 0;
-let gameCanceled;
-
-function initGame() {
-    gameCanceled = false;
-    computerPoints = 0;
-    playerPoints = 0;
-}
-
-function getValidPlayerSelection() {
-    let isValid = false;
-    let playerSelection;
-    while(!isValid) {
-        playerSelection = prompt("rock, paper or scissors? Press cancel to stop game.");
-        if(checkSelection(playerSelection)) {
-            isValid = true;
-        }
-        else if(playerSelection === null) { // Player canceled
-            gameCanceled = true;
-            return;
-        }
-        else { // Invalid value
-            alert("Invalid value!! input rock, paper or scissors to play. Press cancel to stop game.");
-        }
-    }
-    return playerSelection;
-}
-
-function checkSelection(playerSelection) {
-    if(GAME_VALUES.indexOf(playerSelection) == -1) { // Not found in GAME_VALUES
-        return false;
-    }
-    else {
-        return true; // Valid input
-    }
-}
 
 /* Function that randomly returns rock, paper or scissors */
 
@@ -92,54 +56,79 @@ function playSingleRound(playerSelection, computerSelection) {
     } 
 }
 
-function game(numberOfRounds = 5) {
-    initGame();
-    for(let i = 0; i < Math.abs(numberOfRounds); i++) {
-        playerSelection = getValidPlayerSelection();
-        computerSelection = computerPlay();
-        if(!gameCanceled) {
-            console.log(`Player selection: ${playerSelection}. Computer selection: ${computerSelection}`)
-            console.log(playSingleRound(playerSelection, computerSelection));
-            console.log(`Player points: ${playerPoints} Computer points: ${computerPoints}`);
-        }
-        else {
-            console.log("Exit game..");
-            return null; // User canceled
-        }
-    } // Game Ended
-    if(playerPoints > computerPoints) {
-        console.log("Player wins!! :)");
-    }
-    else if(playerPoints < computerPoints) {
-        console.log("Computer wins!! :(");
-    }
-    else {
-        console.log("Tie!! :/");
-    }
-}
-
 const resDiv = document.querySelector("#results");
+const logsDiv = document.querySelector(".logs");
 const btns = document.querySelectorAll(".choices-container .btn");
+const gameInfo = document.querySelector(".score p");
+const gameOver = document.querySelector("#game-over")
 const playerScore = document.querySelector("#player-score");
 const computerScore = document.querySelector("#computer-score");
 
-function btnClicked(e) {
-    let playerSelection = e.target.id;
-    let computerSelection = computerPlay();
-    const res = document.createElement("p");
-    console.log(playerSelection, computerSelection);
-    let result = playSingleRound(playerSelection, computerSelection);
-    if(logs == 8) {
-        resDiv.innerHTML = "";
-        logs = -1;
-    }
-    res.textContent = result;
-    computerScore.textContent = computerPoints;
-    playerScore.textContent = playerPoints;
-    resDiv.appendChild(res);
-    logs++
+function clearResultDiv() {
+    resDiv.innerHTML = "";
+    logs = -1;
 }
 
+function startNewGame() {
+    window.location.reload();
+}
+
+function appendResults(res) {
+    computerScore.textContent = computerPoints;
+    playerScore.textContent = playerPoints;
+    if(playerPoints >= 5 || computerPoints >= 5) {
+        endGame();
+    }
+    else {
+        resDiv.appendChild(res);
+        logs++
+    }
+}
+
+function continueGame(e) {
+    if(e.target.id === "yes") {
+        startNewGame();
+    }
+    else {
+        let response = window.confirm("Are you sure?");
+        if(response) {
+            window.close();
+        }
+    }
+}
+
+function endGame() {
+    gameRunning = false;
+    clearResultDiv();
+    gameOver.style.display = "flex";
+    logsDiv.removeChild(resDiv);
+    const gameOverButtons = document.querySelectorAll("#continue button");
+    if(playerPoints > computerPoints) {
+        gameInfo.textContent = "Player wins!! >:)"
+    }
+    else {
+        gameInfo.textContent = "Computer wins!! >:("
+    }
+    gameOverButtons.forEach(btn => {
+        btn.addEventListener('click', continueGame);
+    })
+}
+
+function btnClicked(e) {
+    if(gameRunning) {
+        const res = document.createElement("p");
+        let playerSelection = e.target.id;
+        let computerSelection = computerPlay();
+        let result = playSingleRound(playerSelection, computerSelection);
+        if(logs == 8) {
+            clearResultDiv();
+        }
+        else if(resDiv !== null) {
+            res.textContent = result;
+            appendResults(res);
+        }
+    }
+}
 
 btns.forEach(btn => {
     btn.addEventListener('click', btnClicked)

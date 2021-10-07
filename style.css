@@ -128,7 +128,37 @@ body, html {
 }
 
 #player-score, #computer-score {
-    color: #0B4FD9;
+    color: #30BF39;
+}
+
+#game-over {
+    display: none;
+    flex-direction: column;
+    flex: 1 0 auto;
+    align-self: center;
+    justify-content: center;
+}
+
+#game-over h1 {
+    text-align: center;
+}
+
+#game-over p {
+    text-align: center;
+    padding-bottom: 2rem;
+}
+
+#continue {
+    display: flex;
+    justify-content: space-around;
+}
+
+#game-over button {
+    font-family: 'Press Start 2P', cursive;
+    background-color: transparent;
+    border: none;
+    font-size: 1rem;
+    color: #2911B1;
 }
 
 @media only screen and (max-width: 480px) {
@@ -144,5 +174,9 @@ body, html {
     }
     #results {
         padding-bottom: 0;
+    }
+    .choices-container {
+        padding-top: 3rem;
+        gap: 4rem;
     }
 }
