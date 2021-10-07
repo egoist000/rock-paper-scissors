@@ -3,6 +3,16 @@ let gameRunning = true;
 let playerPoints = 0;
 let computerPoints = 0;
 let logs = 0;
+let charIndex = 0;
+
+function typeWriter(text, obj) {
+    if(charIndex < text.length) {
+        obj.textContent += text.charAt(charIndex);
+        charIndex++;
+        setTimeout(typeWriter(text, obj), 50);
+    }
+    charIndex = 0;
+}
 
 /* Function that randomly returns rock, paper or scissors */
 
@@ -64,6 +74,15 @@ const gameOver = document.querySelector("#game-over")
 const playerScore = document.querySelector("#player-score");
 const computerScore = document.querySelector("#computer-score");
 
+function loadHeader() {
+    const header = document.getElementById("main-header");
+    const ver = document.getElementById("version");
+    typeWriter("Rock, Paper and Scissors", header);
+    setTimeout(typeWriter("ver 0.1", ver), 2000);
+}
+
+window.addEventListener('load', loadHeader);
+
 function clearResultDiv() {
     resDiv.innerHTML = "";
     logs = -1;
@@ -103,10 +122,10 @@ function endGame() {
     logsDiv.removeChild(resDiv);
     const gameOverButtons = document.querySelectorAll("#continue button");
     if(playerPoints > computerPoints) {
-        gameInfo.textContent = "Player wins!! >:)"
+        gameInfo.textContent = "Player wins! >:)"
     }
     else {
-        gameInfo.textContent = "Computer wins!! >:("
+        gameInfo.textContent = "Computer wins! >:("
     }
     gameOverButtons.forEach(btn => {
         btn.addEventListener('click', continueGame);
