@@ -5,13 +5,15 @@ let computerPoints = 0;
 let logs = 0;
 let charIndex = 0;
 
-function typeWriter(text, obj) {
+function typeWriter(text, obj, speed=200) {
     if(charIndex < text.length) {
         obj.textContent += text.charAt(charIndex);
         charIndex++;
-        setTimeout(typeWriter(text, obj), 50);
+        setTimeout(typeWriter, speed, text, obj);
     }
-    charIndex = 0;
+    else {
+        charIndex = 0;
+    }
 }
 
 /* Function that randomly returns rock, paper or scissors */
@@ -76,9 +78,9 @@ const computerScore = document.querySelector("#computer-score");
 
 function loadHeader() {
     const header = document.getElementById("main-header");
-    const ver = document.getElementById("version");
+    const version = document.getElementById("version");
     typeWriter("Rock, Paper and Scissors", header);
-    setTimeout(typeWriter("ver 0.1", ver), 2000);
+    setTimeout(typeWriter, 5000, "ver 0.1", version);
 }
 
 window.addEventListener('load', loadHeader);
