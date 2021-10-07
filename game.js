@@ -59,7 +59,7 @@ function playSingleRound(playerSelection, computerSelection) {
 const resDiv = document.querySelector("#results");
 const logsDiv = document.querySelector(".logs");
 const btns = document.querySelectorAll(".choices-container .btn");
-const gameInfo = document.querySelector(".score p");
+const gameInfo = document.querySelector("#info");
 const gameOver = document.querySelector("#game-over")
 const playerScore = document.querySelector("#player-score");
 const computerScore = document.querySelector("#computer-score");
@@ -90,8 +90,7 @@ function continueGame(e) {
         startNewGame();
     }
     else {
-        let response = window.confirm("Are you sure?");
-        if(response) {
+        if(confirm("Are you sure?")) {
             window.close();
         }
     }
@@ -116,17 +115,19 @@ function endGame() {
 
 function btnClicked(e) {
     if(gameRunning) {
+        const playerImg = document.querySelector("#player-img");
+        const computerImg = document.querySelector("#computer-img");
         const res = document.createElement("p");
         let playerSelection = e.target.id;
         let computerSelection = computerPlay();
+        playerImg.src = `icons/${playerSelection}.png`;
+        computerImg.src = `icons/${computerSelection}.png`;
         let result = playSingleRound(playerSelection, computerSelection);
         if(logs == 8) {
             clearResultDiv();
         }
-        else if(resDiv !== null) {
-            res.textContent = result;
-            appendResults(res);
-        }
+        res.textContent = result;
+        appendResults(res);
     }
 }
 
